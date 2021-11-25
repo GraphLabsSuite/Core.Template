@@ -3,12 +3,13 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer, { RootState } from './rootReducer';
 import { init } from 'graphlabs.core.notifier';
+import hostconfigJson from '../../hostconfig.json';
 
 init({
-  protocol: 'http',
-  host: 'gl-backend.svtz.ru',
-  port: 5000,
-  path: 'odata/taskVariantLogs'
+  protocol: hostconfigJson.protocol,
+  host: hostconfigJson.host,
+  port: hostconfigJson.port,
+  path: hostconfigJson.path
 });
 
 export function configureStore(initialState?: RootState): Store<RootState> {
