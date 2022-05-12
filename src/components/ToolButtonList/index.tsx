@@ -15,6 +15,12 @@ interface State {
     show: boolean;
 }
 
+// Default server URL (mostly useful while development)
+let serverUrl: string = "http://gl-backend.svtz.ru:5000";
+if ("REACT_APP_SERVER_PROTOCOL" in process.env && "REACT_APP_SERVER_HOST" in process.env && "REACT_APP_SERVER_PORT" in process.env) {
+    serverUrl = process.env.REACT_APP_SERVER_PROTOCOL + '://' + process.env.REACT_APP_SERVER_HOST + ':' + process.env.REACT_APP_SERVER_PORT;
+}
+
 export class ToolButtonList extends Component<{}, State> {
 
     public toolButtons?: {
@@ -58,9 +64,9 @@ export class ToolButtonList extends Component<{}, State> {
         });
     }
 
-   private setGraphCreationList() {
+    private setGraphCreationList() {
         const setImg = (title: string): string =>
-            `http://gl-backend.svtz.ru:5000/odata/downloadImage(name='${title}.png')`;
+            `${serverUrl}/odata/downloadImage(name='${title}.png')`;
         let list: { [index: string]: () => void } = {};
         list[setImg('add_vertex')] = () => {
             console.log(adapter);
@@ -80,7 +86,7 @@ export class ToolButtonList extends Component<{}, State> {
 
     private setDefaultButtonList() {
         const setImg = (title: string): string =>
-            `http://gl-backend.svtz.ru:5000/odata/downloadImage(name='${title}.png')`;
+            `${serverUrl}/odata/downloadImage(name='${title}.png')`;
         let list: { [index: string]: () => void } = {};
         list[setImg('Help')] = () => {
             this.dispatch({
