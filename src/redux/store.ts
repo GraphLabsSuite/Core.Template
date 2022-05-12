@@ -4,10 +4,16 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer, { RootState } from './rootReducer';
 import { init } from 'graphlabs.core.notifier';
 
+// '!': https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator
+// http://gl-backend.svtz.ru:5000 is default server URL (mostly useful while development)
+let serverProtocol: string = 'REACT_APP_SERVER_PROTOCOL' in process.env ? process.env.REACT_APP_SERVER_PROTOCOL! : 'http';
+let serverHost: string = 'REACT_APP_SERVER_HOST' in process.env ? process.env.REACT_APP_SERVER_HOST! : 'gl-backend.svtz.ru';
+let serverPort: number = 'REACT_APP_SERVER_PORT' in process.env ? parseInt(process.env.REACT_APP_SERVER_PORT!) : 5000;
+
 init({
-  protocol: 'http',
-  host: 'gl-backend.svtz.ru',
-  port: 5000,
+  protocol: serverProtocol,
+  host: serverHost,
+  port: serverPort,
   path: 'odata/taskVariantLogs'
 });
 
